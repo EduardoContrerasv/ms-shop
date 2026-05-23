@@ -8,10 +8,11 @@ import cl.duoc.ms_shop.model.ShopItem;
 import cl.duoc.ms_shop.repository.ShopItemRepository;
 import cl.duoc.ms_shop.service.ShopService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ShopServiceImpl implements ShopService {
@@ -23,6 +24,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public String createShopListing(ShopItemRequestDto dto) {
+        log.info("createShopListing");
         ShopItem listing = new ShopItem();
         listing.setItemId(dto.getItemId());
         listing.setPrice(dto.getPrice());
@@ -34,7 +36,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public String purchaseItem(PurchaseRequestDto dto) {
-
+        log.info("purchaseItem");
         ShopItem listing = repository.findById(dto.getShopItemId())
                 .orElseThrow(() -> new RuntimeException("El item no existe en la tienda."));
 
@@ -76,7 +78,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<ShopCatalogResponseDto> getCatalog() {
-
+        log.info("getCatalog");
         List<ShopItem> allListings = repository.findAll();
 
         return allListings.stream().map(listing -> {
